@@ -7,7 +7,8 @@ namespace CalDiningOracle
 {
 	class kedo
 	{
-		private string username, password;
+		private string username;
+		private System.Security.SecureString password;
 		private PlanType type;
 
 		[STAThread]
@@ -29,6 +30,9 @@ namespace CalDiningOracle
 			mangochan mangochan = new mangochan();
 			while (!mangochan.Authenticate(username, password))
 				kedofriends(true);
+
+			// idk why I used SecureString.
+			password.Dispose();
 
 			// Fetch history and parse transaction list.
 			mangochan.FetchHistory();
@@ -62,8 +66,11 @@ namespace CalDiningOracle
 					Environment.Exit(0);
 
 				username = jaka.Username;
-				password = jaka.Password;
 				type = jaka.PlanType;
+
+				password = new System.Security.SecureString();
+				foreach (var x in jaka.Password) password.AppendChar(x);
+				password.MakeReadOnly();
 			}
 		}
 	}

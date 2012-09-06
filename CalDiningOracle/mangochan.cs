@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace CalDiningOracle
 {
@@ -16,7 +17,7 @@ namespace CalDiningOracle
 		private string transactionsHTML = "";
 		private CookieContainer himitsu = new CookieContainer();
 
-		public bool Authenticate(string username, string password)
+		public bool Authenticate(string username, System.Security.SecureString password)
 		{
 			// jaka go get me my csrf token.
 			HttpWebRequest hwr = WebRequest.Create("https://auth.berkeley.edu/cas/login") as HttpWebRequest;
@@ -31,11 +32,24 @@ namespace CalDiningOracle
 			// regex-fu
 			string csrf_token = mangochan.csrf_token.Match(page).Groups[0].Value;
 
+			// Do things with SecureString because I'm a masochist.
+			IntPtr unmanagedString = IntPtr.Zero;
+			string パスワード;
+			try
+			{
+				unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(password);
+				パスワード = Marshal.PtrToStringUni(unmanagedString);
+			}
+			finally
+			{
+				Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+			}
+
 			// LINQ is best Q.
 			string querystring = (
-				from a in new[] { Tuple.Create("lt", csrf_token), Tuple.Create("_eventId", "submit"), Tuple.Create("username", username), Tuple.Create("password", password) }
+				from a in new[] { Tuple.Create("lt", csrf_token), Tuple.Create("_eventId", "submit"), Tuple.Create("username", username), Tuple.Create("password", "") }
 				select a.Item1 + "=" + Uri.EscapeDataString(a.Item2)
-			).Aggregate((a, b) => a + "&" + b);
+			).Aggregate((a, b) => a + "&" + b) + Uri.EscapeDataString(パスワード);
 
 			// post to the CAS.
 			hwr = WebRequest.Create("https://auth.berkeley.edu/cas/login") as HttpWebRequest;
