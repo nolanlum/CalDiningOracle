@@ -32,6 +32,7 @@
 			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.PointsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			((System.ComponentModel.ISupportInitialize)(this.PointsChart)).BeginInit();
 			this.SuspendLayout();
@@ -55,7 +56,6 @@
 			series1.ChartArea = "PointsVsTime";
 			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series1.Legend = "Legend1";
-			series1.MarkerColor = System.Drawing.Color.RoyalBlue;
 			series1.MarkerSize = 3;
 			series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
 			series1.Name = "Point History";
@@ -68,8 +68,19 @@
 			series2.Name = "Normal Usage";
 			series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
 			series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+			series3.ChartArea = "PointsVsTime";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series3.IsValueShownAsLabel = true;
+			series3.IsVisibleInLegend = false;
+			series3.Legend = "Legend1";
+			series3.MarkerSize = 7;
+			series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
+			series3.Name = "Current";
+			series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+			series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
 			this.PointsChart.Series.Add(series1);
 			this.PointsChart.Series.Add(series2);
+			this.PointsChart.Series.Add(series3);
 			this.PointsChart.Size = new System.Drawing.Size(768, 501);
 			this.PointsChart.TabIndex = 0;
 			this.PointsChart.Text = "PointsChart";
