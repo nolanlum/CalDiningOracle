@@ -55,6 +55,9 @@
 			series1.ChartArea = "PointsVsTime";
 			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series1.Legend = "Legend1";
+			series1.MarkerColor = System.Drawing.Color.RoyalBlue;
+			series1.MarkerSize = 3;
+			series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
 			series1.Name = "Point History";
 			series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
 			series1.YValuesPerPoint = 2;

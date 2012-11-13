@@ -28,6 +28,7 @@ namespace CalDiningOracle
 			decimal points = baseline;
 			foreach (var x in transactions)
 				PointsChart.Series["Point History"].Points.AddXY(x.Date, (points -= x.Amount));
+			PointsChart.Series["Point History"].Points.AddXY(DateTime.Now, points);
 
 			decimal expected = baseline;
 			DateTime start = transactions.Min((x) => x.Date), end = transactions.Max((x) => x.Date);
